@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    restart: always
+    command: --docker --api
+    ports:
+      - "80:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      #- ./acme.json:/acme.json
+      - ./logs/:/logs/
+
+networks:
+  default:
+    external:
+      name: proxy
+
