@@ -7,12 +7,15 @@ services:
     command: --docker --api
     ports:
       - "80:80"     # The HTTP port
-      - "8080:8080" # The Web UI (enabled by --api)
+      - "8080" # The Web UI (enabled by --api)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
       #- ./acme.json:/acme.json
       - ./logs/:/logs/
+    labels:
+        - "traefik.frontend.rule=Host:traefik.localhost"
+        - "traefik.port=8080"
 
 networks:
   default:
