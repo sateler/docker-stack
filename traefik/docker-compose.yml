@@ -2,7 +2,7 @@ version: '3'
 
 services:
   reverse-proxy:
-    image: traefik # The official Traefik docker image
+    image: traefik:v1.7 # The official Traefik docker image
     restart: always
     command: --docker --api
     ports:
@@ -12,7 +12,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
       #- ./acme.json:/acme.json
-      - ./logs/:/logs/
     labels:
         - "traefik.frontend.rule=Host:traefik.localhost"
         - "traefik.port=8080"
