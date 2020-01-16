@@ -14,7 +14,7 @@ services:
             - proxy
             - internal
         labels:
-            - "traefik.frontend.rule=Host:phpmyadmin.docker.localhost"
+            - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.docker.localhost`)"
             - "traefik.docker.network=proxy"
 
     phpmyadmin-fpm:

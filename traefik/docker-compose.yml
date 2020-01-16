@@ -2,9 +2,9 @@ version: '3'
 
 services:
   reverse-proxy:
-    image: traefik:v1.7 # The official Traefik docker image
+    # The official v2.0 Traefik docker image
+    image: traefik:v2.0
     restart: always
-    command: --docker --api
     ports:
       - "80:80"     # The HTTP port
       - "8080" # The Web UI (enabled by --api)
@@ -12,9 +12,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
       #- ./acme.json:/acme.json
+      # - ./logs/:/logs/
     labels:
-        - "traefik.frontend.rule=Host:traefik.localhost"
-        - "traefik.port=8080"
+        - "traefik.http.routers.reverse-proxy.rule=Host(`traefik.localhost`)"
+        - "traefik.http.services.reverse-proxy.loadbalancer.server.port=8080"
 
 networks:
   default:
