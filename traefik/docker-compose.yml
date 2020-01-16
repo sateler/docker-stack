@@ -7,7 +7,8 @@ services:
     restart: always
     ports:
       - "80:80"     # The HTTP port
-      - "8080" # The Web UI (enabled by --api)
+      - "3306:3306"
+      - "8080" # The Web UI
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
@@ -15,6 +16,7 @@ services:
       # - ./logs/:/logs/
     labels:
         - "traefik.http.routers.reverse-proxy.rule=Host(`traefik.localhost`)"
+        - "traefik.http.routers.reverse-proxy.entryPoints=web"
         - "traefik.http.services.reverse-proxy.loadbalancer.server.port=8080"
 
 networks:

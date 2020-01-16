@@ -15,6 +15,7 @@ services:
             - internal
         labels:
             - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.docker.localhost`)"
+            - "traefik.http.routers.phpmyadmin.entryPoints=web"
             - "traefik.docker.network=proxy"
 
     phpmyadmin-fpm:
@@ -23,11 +24,12 @@ services:
         ports:
             - "9000"
         environment:
-            - PMA_HOST=172.17.0.1
+            - PMA_HOSTS=mysql,172.17.0.1
         volumes:
             - phpmyadmin_data:/var/www/html/
         networks:
             - internal
+            - db
         labels:
             - "traefik.enable=false"
 
@@ -39,4 +41,6 @@ networks:
         external: true
     internal:
         external: false
+    db:
+        external: true
 

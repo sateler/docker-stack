@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+    mysql:
+        # restart: always
+        image: mysql:5.7
+        command: --max_allowed_packet=120M --default_time_zone='+00:00'
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+            MYSQL_ROOT_HOST: mysql.docker.localhost
+        ports:
+            - "3306"
+        volumes:
+            - ./collation.cnf:/etc/mysql/conf.d/collation.cnf
+            - ./mysql-data:/var/lib/mysql
+        networks:
+            - db
+            - proxy
+        labels:
+            - "traefik.tcp.routers.mysql.entryPoints=mysql"
+            - "traefik.tcp.routers.mysql.rule=HostSNI(`*`)"
+            - "traefik.docker.network=proxy"
+
+networks:
+    db:
+        external: true
+    proxy:
+        external: true

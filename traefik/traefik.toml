@@ -24,6 +24,8 @@
 [entryPoints]
   [entryPoints.web]
     address = ":80"
+  [entryPoints.mysql]
+    address = ":3306"
 
   # [entryPoints.websecure]
   #   address = ":443"
