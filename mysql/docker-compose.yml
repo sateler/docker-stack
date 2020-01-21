@@ -8,7 +8,6 @@ services:
         command: --max_allowed_packet=120M --default_time_zone='+00:00'
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-            MYSQL_ROOT_HOST: mysql.docker.localhost
         ports:
             - "3306"
         volumes:
