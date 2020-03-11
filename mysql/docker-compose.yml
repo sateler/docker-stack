@@ -3,7 +3,7 @@ version: '3'
 services:
 
     mysql:
-        # restart: always
+        restart: always
         image: mysql:5.7
         command: --max_allowed_packet=120M --default_time_zone='+00:00'
         environment:
